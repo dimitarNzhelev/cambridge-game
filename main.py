@@ -1,6 +1,4 @@
-# main.py
 import pygame
-from settings import screen
 from scenes.menu import MenuScene
 from scenes.level1 import Level1Scene
 from scenes.level_selection import LevelSelectionScene
