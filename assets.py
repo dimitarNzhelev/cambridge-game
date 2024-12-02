@@ -10,7 +10,8 @@ def load_assets():
     assets['dirt_img'] = pygame.image.load('data/images/dirt.png')
     assets['plant_img'] = pygame.image.load('data/images/plant.png').convert()
     assets['plant_img'].set_colorkey((255, 255, 255))
-    
+    assets['background_image'] = pygame.image.load('data/images/castle.webp').convert()
+
     # Load sounds
     assets['jump_sound'] = pygame.mixer.Sound('data/audio/jump.wav')
     assets['grass_sounds'] = [
