@@ -1,8 +1,8 @@
 import pygame, sys
 from settings import screen, display, clock
-from assets import load_assets
-from player import Player
-from world import load_tile_map
+from utils.assets import load_assets
+from utils.player import Player
+from utils.world import load_tile_map
 
 class Level1Scene:
     def __init__(self):
