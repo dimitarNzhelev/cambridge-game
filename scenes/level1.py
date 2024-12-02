@@ -1,17 +1,17 @@
 # scenes/level1.py
-import pygame, sys, random, time
+import pygame, sys, time
 from settings import screen, display, clock, WINDOW_SIZE
 from utils.assets import load_assets
 from utils.player import Player
 from utils.world import load_tile_map
-from utils.falling_object import FallingObject
+from utils.falling_object_manager import FallingObjectManager
 
 class Level1Scene:
     def __init__(self):
         self.assets = load_assets()
         self.grass_sound_timer = 0
         self.true_scroll = [0, 0]
-        self.player = Player(152, 480)
+        self.player = Player(152, 600)
         self.background_objects = [
             [0.25, [120, 10, 70, 400]],
             [0.25, [280, 30, 40, 400]],
@@ -19,9 +19,8 @@ class Level1Scene:
             [0.5, [130, 90, 100, 400]],
             [0.5, [300, 80, 120, 400]]
         ]
-        self.tile_map = load_tile_map('data/tile_map.txt')
-        self.falling_objects = []
-        self.falling_object_image = self.assets['plant_img']  # Use an appropriate image from your assets
+        self.tile_map = load_tile_map('data/map1.txt')
+        self.falling_object_manager = FallingObjectManager(self.assets['plant_img'], self.player, WINDOW_SIZE[1])
         self.font = pygame.font.Font(None, 36)  # Default font and size
 
     def run(self):
@@ -61,28 +60,18 @@ class Level1Scene:
             self.player.update(tile_rects)
             self.player.render(display, scroll)
 
-            # Create new falling objects
-            if random.randint(1, 100) == 1:  # Adjust the frequency as needed
-                new_object = FallingObject(random.randint(0, 300), -20, self.falling_object_image)
-                self.falling_objects.append(new_object)
+            # Create and update falling objects
+            self.falling_object_manager.create_falling_object()
+            self.falling_object_manager.update_and_render(display, scroll)
 
-            # Update and render falling objects
-            for obj in self.falling_objects:
-                obj.update()
-                obj.render(display, scroll)
-                if obj.check_collision(self.player.entity.rect()):
-                    self.player.health -= 1  # Decrease player health
-                    self.falling_objects.remove(obj)  # Remove the object after collision
-
-            # Remove objects that have fallen off the screen
-            self.falling_objects = [obj for obj in self.falling_objects if obj.rect.y < 800]
 
             # Check if player is dead
             if self.player.health <= 0:
                 self.show_game_over()
                 time.sleep(5)
-                return "level_selection"
-
+                pygame.quit()
+                sys.exit()
+                
             for event in pygame.event.get():  # event loop
                 if event.type == pygame.QUIT:
                     pygame.quit()
@@ -108,14 +97,14 @@ class Level1Scene:
                         self.player.moving_left = False
 
             screen.blit(pygame.transform.scale(display, screen.get_size()), (0, 0))
-            # Render player's health
             self.render_health()
             pygame.display.update()
             clock.tick(60)
 
     def render_health(self):
-        health_text = self.font.render(f"Health: {self.player.health}", True, (255, 0, 0))
-        screen.blit(health_text, (WINDOW_SIZE[0] - 150, 10))
+        for i in range(self.player.health):
+            screen.blit(pygame.image.load('data/images/heart.jpg'), (WINDOW_SIZE[0] - 60 * (i + 1), 10))
+
 
     def show_game_over(self):
         game_over_text = self.font.render("YOU LOST", True, (255, 0, 0))
