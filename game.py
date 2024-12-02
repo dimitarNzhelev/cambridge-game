@@ -1,16 +1,15 @@
 import pygame, sys
-from settings import screen, display, clock, CHUNK_SIZE
+from settings import screen, display, clock
 from assets import load_assets
 from player import Player
-from world import generate_chunk
+from world import load_tile_map
 
 def main():
     assets = load_assets()
-    game_map = {}
     grass_sound_timer = 0
     true_scroll = [0, 0]
 
-    player = Player(100, 100)
+    player = Player(152, 480)
 
     background_objects = [
         [0.25, [120, 10, 70, 400]],
@@ -20,6 +19,9 @@ def main():
         [0.5, [300, 80, 120, 400]]
     ]
 
+    # Load the tile map
+    tile_map = load_tile_map('data/tile_map.txt')
+
     while True:
         display.fill((146, 244, 255))  # clear screen by filling it with blue
 
@@ -28,6 +30,7 @@ def main():
 
         true_scroll[0] += (player.entity.x - true_scroll[0] - 152) / 20
         true_scroll[1] += (player.entity.y - true_scroll[1] - 106) / 20
+
         scroll = true_scroll.copy()
         scroll[0] = int(scroll[0])
         scroll[1] = int(scroll[1])
@@ -45,17 +48,12 @@ def main():
                 pygame.draw.rect(display, (15, 76, 73), obj_rect)
 
         tile_rects = []
-        for y in range(3):
-            for x in range(4):
-                target_x = x - 1 + int(round(scroll[0] / (CHUNK_SIZE * 16)))
-                target_y = y - 1 + int(round(scroll[1] / (CHUNK_SIZE * 16)))
-                target_chunk = str(target_x) + ';' + str(target_y)
-                if target_chunk not in game_map:
-                    game_map[target_chunk] = generate_chunk(target_x, target_y, CHUNK_SIZE)
-                for tile in game_map[target_chunk]:
-                    display.blit(assets['tile_index'][tile[1]], (tile[0][0] * 16 - scroll[0], tile[0][1] * 16 - scroll[1]))
-                    if tile[1] in [1, 2]:
-                        tile_rects.append(pygame.Rect(tile[0][0] * 16, tile[0][1] * 16, 16, 16))
+        for y, row in enumerate(tile_map):
+            for x, tile in enumerate(row):
+                if tile != 0:
+                    display.blit(assets['tile_index'][tile], (x * 16 - scroll[0], y * 16 - scroll[1]))
+                    if tile in [1, 2]:
+                        tile_rects.append(pygame.Rect(x * 16, y * 16, 16, 16))
 
         player.update(tile_rects)
         player.render(display, scroll)
