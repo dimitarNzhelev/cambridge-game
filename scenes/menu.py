@@ -69,7 +69,7 @@ class MenuScene:
                     sys.exit()
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if play_button.checkForInput(menu_mouse_pos):
-                        return "level1"
+                        return "level_selection"
                     if quit_button.checkForInput(menu_mouse_pos):
                         pygame.quit()
                         sys.exit()
