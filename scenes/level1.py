@@ -1,6 +1,5 @@
-# scenes/level1.py
 import pygame, sys, time
-from settings import screen, display, clock, WINDOW_SIZE
+from settings import screen, display, clock, DISPLAY_SIZE, WINDOW_SIZE
 from utils.assets import load_assets
 from utils.player import Player
 from utils.world import load_tile_map
@@ -10,8 +9,8 @@ class Level1Scene:
     def __init__(self):
         self.assets = load_assets()
         self.grass_sound_timer = 0
-        self.true_scroll = [0, 0]
-        self.player = Player(152, 600)
+        self.player = Player(166, 600)
+        self.true_scroll = [self.player.entity.x - DISPLAY_SIZE[0] // 2, 0]
         self.background_objects = [
             [0.25, [120, 10, 70, 400]],
             [0.25, [280, 30, 40, 400]],
@@ -22,6 +21,7 @@ class Level1Scene:
         self.tile_map = load_tile_map('data/map1.txt')
         self.falling_object_manager = FallingObjectManager(self.assets['plant_img'], self.player, WINDOW_SIZE[1])
         self.font = pygame.font.Font(None, 36)  # Default font and size
+        self.player.is_immune = False
 
     def run(self):
         while True:
@@ -30,11 +30,11 @@ class Level1Scene:
             if self.grass_sound_timer > 0:
                 self.grass_sound_timer -= 1
 
-            self.true_scroll[0] += (self.player.entity.x - self.true_scroll[0] - 152) / 20
+            # Update only the Y component of true_scroll
             self.true_scroll[1] += (self.player.entity.y - self.true_scroll[1] - 106) / 20
 
             scroll = self.true_scroll.copy()
-            scroll[0] = int(scroll[0])
+            scroll[0] = int(self.true_scroll[0])  # Keep the X component constant
             scroll[1] = int(scroll[1])
 
             pygame.draw.rect(display, (7, 80, 75), pygame.Rect(0, 120, 300, 80))
@@ -64,6 +64,12 @@ class Level1Scene:
             self.falling_object_manager.create_falling_object()
             self.falling_object_manager.update_and_render(display, scroll)
 
+            # Check if player has reached the top of the 1s
+            if self.player.entity.y < self.get_top_of_ones():
+                print("Player is immune")
+                self.player.is_immune = True
+            else:
+                self.player.is_immune = False
 
             # Check if player is dead
             if self.player.health <= 0:
@@ -105,8 +111,14 @@ class Level1Scene:
         for i in range(self.player.health):
             screen.blit(pygame.image.load('data/images/heart.jpg'), (WINDOW_SIZE[0] - 60 * (i + 1), 10))
 
-
     def show_game_over(self):
         game_over_text = self.font.render("YOU LOST", True, (255, 0, 0))
         screen.blit(game_over_text, (WINDOW_SIZE[0] // 2 - 100, WINDOW_SIZE[1] // 2 - 50))
         pygame.display.update()
+
+    def get_top_of_ones(self):
+        for y, row in enumerate(self.tile_map):
+            for x, tile in enumerate(row):
+                if tile == 1:
+                    return y * 16  # Assuming each tile is 16 pixels high
+        return float('inf')  # Return a very high value if no 1s are found

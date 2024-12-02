@@ -9,11 +9,14 @@ class FallingObjectManager:
         self.screen_height = screen_height
 
     def create_falling_object(self):
-        if random.randint(1, 100) == 1:  # Adjust the frequency as needed
+        if not self.player.is_immune and random.randint(1, 100) == 1:  # Adjust the frequency as needed
             new_object = FallingObject(random.randint(0, 300), -20, self.falling_object_image)
             self.falling_objects.append(new_object)
 
     def update_and_render(self, display, scroll):
+        if self.player.is_immune:
+            return  # Do not update or render falling objects if the player is immune
+
         for obj in self.falling_objects:
             obj.update()
             obj.render(display, scroll)
