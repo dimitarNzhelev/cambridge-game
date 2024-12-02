@@ -1,8 +1,10 @@
-import pygame, sys
-from settings import screen, display, clock
+# scenes/level1.py
+import pygame, sys, random, time
+from settings import screen, display, clock, WINDOW_SIZE
 from utils.assets import load_assets
 from utils.player import Player
 from utils.world import load_tile_map
+from utils.falling_object import FallingObject
 
 class Level1Scene:
     def __init__(self):
@@ -18,6 +20,9 @@ class Level1Scene:
             [0.5, [300, 80, 120, 400]]
         ]
         self.tile_map = load_tile_map('data/tile_map.txt')
+        self.falling_objects = []
+        self.falling_object_image = self.assets['plant_img']  # Use an appropriate image from your assets
+        self.font = pygame.font.Font(None, 36)  # Default font and size
 
     def run(self):
         while True:
@@ -56,6 +61,28 @@ class Level1Scene:
             self.player.update(tile_rects)
             self.player.render(display, scroll)
 
+            # Create new falling objects
+            if random.randint(1, 100) == 1:  # Adjust the frequency as needed
+                new_object = FallingObject(random.randint(0, 300), -20, self.falling_object_image)
+                self.falling_objects.append(new_object)
+
+            # Update and render falling objects
+            for obj in self.falling_objects:
+                obj.update()
+                obj.render(display, scroll)
+                if obj.check_collision(self.player.entity.rect()):
+                    self.player.health -= 1  # Decrease player health
+                    self.falling_objects.remove(obj)  # Remove the object after collision
+
+            # Remove objects that have fallen off the screen
+            self.falling_objects = [obj for obj in self.falling_objects if obj.rect.y < 800]
+
+            # Check if player is dead
+            if self.player.health <= 0:
+                self.show_game_over()
+                time.sleep(5)
+                return "level_selection"
+
             for event in pygame.event.get():  # event loop
                 if event.type == pygame.QUIT:
                     pygame.quit()
@@ -81,9 +108,16 @@ class Level1Scene:
                         self.player.moving_left = False
 
             screen.blit(pygame.transform.scale(display, screen.get_size()), (0, 0))
+            # Render player's health
+            self.render_health()
             pygame.display.update()
             clock.tick(60)
 
-if __name__ == "__main__":
-    level1_scene = Level1Scene()
-    level1_scene.run()
+    def render_health(self):
+        health_text = self.font.render(f"Health: {self.player.health}", True, (255, 0, 0))
+        screen.blit(health_text, (WINDOW_SIZE[0] - 150, 10))
+
+    def show_game_over(self):
+        game_over_text = self.font.render("YOU LOST", True, (255, 0, 0))
+        screen.blit(game_over_text, (WINDOW_SIZE[0] // 2 - 100, WINDOW_SIZE[1] // 2 - 50))
+        pygame.display.update()

@@ -7,6 +7,7 @@ class Player:
         self.moving_left = False
         self.vertical_momentum = 0
         self.air_timer = 0
+        self.health = 3
 
     def handle_movement(self):
         """Handle player movement based on input."""

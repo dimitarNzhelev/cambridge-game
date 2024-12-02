@@ -1,3 +1,4 @@
+# main.py
 import pygame
 from scenes.menu import MenuScene
 from scenes.level1 import Level1Scene
@@ -19,8 +20,7 @@ class Game:
             elif self.current_scene == "level_selection":
                 self.current_scene = self.scenes["level_selection"].run()
             elif self.current_scene == "level1":
-                self.scenes["level1"].run()
-                self.current_scene = "menu"
+                self.current_scene = self.scenes["level1"].run()
 
 if __name__ == "__main__":
     pygame.init()
