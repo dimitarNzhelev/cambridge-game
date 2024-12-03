@@ -13,7 +13,7 @@ def load_assets():
     assets['background_image'] = pygame.image.load('data/images/castle.webp').convert()
 
     # Load sounds
-    assets['jump_sound'] = pygame.mixer.Sound('data/audio/jump.wav')
+    # assets['jump_sound'] = pygame.mixer.Sound('data/audio/jump.wav')
     assets['grass_sounds'] = [
         pygame.mixer.Sound('data/audio/grass_0.wav'),
         pygame.mixer.Sound('data/audio/grass_1.wav')

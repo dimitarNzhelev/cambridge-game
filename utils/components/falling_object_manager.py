@@ -1,5 +1,5 @@
 import random
-from utils.falling_object import FallingObject
+from utils.components.falling_object import FallingObject
 
 class FallingObjectManager:
     def __init__(self, falling_object_image, player, screen_height):

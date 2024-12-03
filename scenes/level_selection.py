@@ -2,8 +2,8 @@
 import pygame
 import sys
 from settings import WINDOW_SIZE, screen
-from utils.button import Button
-from utils.resource_loader import ResourceLoader
+from utils.components.ui.button import Button
+from utils.components.resource_loader import ResourceLoader
 
 class LevelSelectionScene:
     def __init__(self):
