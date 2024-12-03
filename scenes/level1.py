@@ -104,6 +104,9 @@ class Level1Scene:
                         self.player.moving_left = True
                     if event.key == pygame.K_RETURN and self.conversation_active:
                         self.dialog_window.advance_dialog()
+                        if self.dialog_window.is_dialog_ended():
+                            pygame.quit()
+                            sys.exit()
                 if event.type == pygame.KEYUP:
                     if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
                         self.player.moving_right = False
@@ -111,6 +114,9 @@ class Level1Scene:
                         self.player.moving_left = False
                 if event.type == pygame.MOUSEBUTTONDOWN and self.conversation_active:
                     self.dialog_window.advance_dialog()
+                    if self.dialog_window.is_dialog_ended():
+                        pygame.quit()
+                        sys.exit()
 
             screen.blit(pygame.transform.scale(display, screen.get_size()), (0, 0))
             self.render_health()
@@ -121,6 +127,9 @@ class Level1Scene:
                 self.show_conversation()
             else:
                 self.conversation_active = False
+
+            if self.conversation_active:
+                self.show_conversation()
 
             pygame.display.update()
             clock.tick(60)

@@ -62,4 +62,7 @@ class DialogWindow:
             self.current_line_index += 1
             self.set_text(self.dialog_lines[self.current_line_index])
         else:
-            self.current_line_index = 0  # Reset or handle end of dialog
+            self.current_line_index = -1  # Indicate end of dialog
+
+    def is_dialog_ended(self):
+        return self.current_line_index == -1
