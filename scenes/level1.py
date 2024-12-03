@@ -1,11 +1,12 @@
+# scenes/level1.py
 import pygame, sys, time
 from settings import screen, display, clock, DISPLAY_SIZE, WINDOW_SIZE
 from utils.assets import load_assets
-from utils.player import Player
+from utils.components.player import Player
 from utils.world import load_tile_map
-from utils.falling_object_manager import FallingObjectManager
-from utils.enemy import Enemy  # Import the Enemy class
-from entries.entity import Entity
+from utils.components.falling_object_manager import FallingObjectManager
+from utils.components.enemy import Enemy
+from utils.components.ui.dialog_window import DialogWindow
 
 class Level1Scene:
     def __init__(self):
@@ -22,9 +23,10 @@ class Level1Scene:
         ]
         self.tile_map = load_tile_map('data/map1.txt')
         self.falling_object_manager = FallingObjectManager(self.assets['plant_img'], self.player, WINDOW_SIZE[1])
-        self.font = pygame.font.Font(None, 36)  # Default font and size
         self.enemy = Enemy(280, 147)  # Initialize the enemy with the new size
         self.conversation_active = False
+        self.dialog_window = DialogWindow("", "", (50, 50), WINDOW_SIZE[0] - 100, WINDOW_SIZE[1] - 100, 64)
+        self.load_dialog_from_file('data/enemies/level1.npc')
 
     def run(self):
         while True:
@@ -90,22 +92,25 @@ class Level1Scene:
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_w:
                         if self.player.air_timer < 6:
-                            self.assets['jump_sound'].play()
+                            # self.assets['jump_sound'].play()
                             self.player.vertical_momentum = -5
                     if event.key == pygame.K_UP:
                         if self.player.air_timer < 6:
-                            self.assets['jump_sound'].play()
+                            # self.assets['jump_sound'].play()
                             self.player.vertical_momentum = -5
                     if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
                         self.player.moving_right = True
                     if event.key == pygame.K_LEFT or event.key == pygame.K_a:
                         self.player.moving_left = True
-
+                    if event.key == pygame.K_RETURN and self.conversation_active:
+                        self.dialog_window.advance_dialog()
                 if event.type == pygame.KEYUP:
                     if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
                         self.player.moving_right = False
                     if event.key == pygame.K_LEFT or event.key == pygame.K_a:
                         self.player.moving_left = False
+                if event.type == pygame.MOUSEBUTTONDOWN and self.conversation_active:
+                    self.dialog_window.advance_dialog()
 
             screen.blit(pygame.transform.scale(display, screen.get_size()), (0, 0))
             self.render_health()
@@ -128,7 +133,7 @@ class Level1Scene:
         game_over_text = self.font.render("YOU LOST", True, (255, 0, 0))
         screen.blit(game_over_text, (WINDOW_SIZE[0] // 2 - 100, WINDOW_SIZE[1] // 2 - 50))
         pygame.display.update()
-
+    
     def get_top_of_ones(self):
         for y, row in enumerate(self.tile_map):
             for x, tile in enumerate(row):
@@ -136,6 +141,18 @@ class Level1Scene:
                     return y * 16  # Assuming each tile is 16 pixels high
         return float('inf')  # Return a very high value if no 1s are found
 
+    def load_dialog_from_file(self, filepath):
+        with open(filepath, 'r') as file:
+            dialog_lines = file.read().splitlines()
+        self.dialog_window.load_dialog(dialog_lines)
+
     def show_conversation(self):
-        conversation_text = self.font.render("Hello, Player!", True, (255, 255, 255))
-        screen.blit(conversation_text, (WINDOW_SIZE[0] // 2 - 100, WINDOW_SIZE[1] // 2 - 50))
+        if self.dialog_window.current_line_index < len(self.dialog_window.dialog_lines):
+            current_line = self.dialog_window.dialog_lines[self.dialog_window.current_line_index]
+            if current_line.startswith('-'):
+                # Player's line
+                self.dialog_window.set_text("Player: \n" + current_line[1:].strip())            
+            else:
+                # Enemy's line
+                self.dialog_window.set_text(current_line)
+        self.dialog_window.render(screen)
