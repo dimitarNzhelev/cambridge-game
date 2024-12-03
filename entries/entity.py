@@ -1,6 +1,5 @@
 import math
 import pygame
-from typing import List, Tuple, Optional
 from core.physics import PhysicsObject
 from utils.helpers import flip, blit_center
 from graphics.animation import animation_database, animation_higher_database
@@ -251,25 +250,44 @@ class Entity:
             if self.alpha != None:
                 image_to_render.set_alpha(self.alpha)
             return image_to_render, center_x, center_y
+        
+    def check_collision(self,other_entity):
+        """
+        Check if the entity is colliding with another entity.
+        
+        Args:
+            other_entity (Entity): The entity to check collision against
+            
+        Returns:
+            bool: True if the entities are colliding, False otherwise
+        """
+        return self.obj.rect.colliderect(other_entity.obj.rect)
  
-    def display(self,surface,scroll):
+    def display(self, surface, scroll, center_image=False):
         """
         Display the entity on the given surface with scroll offset.
         
         Args:
             surface (pygame.Surface): Surface to draw the entity on
             scroll (List[float]): [x, y] scroll offset values
+            center_image (bool): Whether to center the image within the entity
         """
         image_to_render = None
-        if self.animation == None:
-            if self.image != None:
-                image_to_render = flip(self.image,self.flip).copy()
+        if self.animation is None:
+            if self.image is not None:
+                image_to_render = flip(self.image, self.flip).copy()
         else:
-            image_to_render = flip(animation_database[self.animation[self.animation_frame]],self.flip).copy()
-        if image_to_render != None:
-            center_x = image_to_render.get_width()/2
-            center_y = image_to_render.get_height()/2
-            image_to_render = pygame.transform.rotate(image_to_render,self.rotation)
-            if self.alpha != None:
+            image_to_render = flip(animation_database[self.animation[self.animation_frame]], self.flip).copy()
+        
+        if image_to_render is not None:
+            image_to_render = pygame.transform.rotate(image_to_render, self.rotation)
+            if self.alpha is not None:
                 image_to_render.set_alpha(self.alpha)
-            blit_center(surface,image_to_render,(int(self.x)-scroll[0]+self.offset[0]+center_x,int(self.y)-scroll[1]+self.offset[1]+center_y))
+            if center_image:
+                center_x = self.size_x / 2
+                center_y = self.size_y / 2
+                blit_center(surface, image_to_render, (int(self.x - scroll[0] + center_x), int(self.y - scroll[1] + center_y)))
+            else:
+                center_x = image_to_render.get_width() / 2
+                center_y = image_to_render.get_height() / 2
+                blit_center(surface, image_to_render, (int(self.x) - scroll[0] + self.offset[0] + center_x, int(self.y) - scroll[1] + self.offset[1] + center_y))

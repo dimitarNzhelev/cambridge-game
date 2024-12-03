@@ -8,6 +8,7 @@ class Player:
         self.vertical_momentum = 0
         self.air_timer = 0
         self.health = 3 
+        self.is_immune = False
 
     def handle_movement(self):
         """Handle player movement based on input."""
@@ -47,4 +48,4 @@ class Player:
 
     def render(self, display, scroll):
         """Render the player on the display."""
-        self.entity.display(display, scroll)
+        self.entity.display(display, scroll, center_image=False)

@@ -4,6 +4,8 @@ from utils.assets import load_assets
 from utils.player import Player
 from utils.world import load_tile_map
 from utils.falling_object_manager import FallingObjectManager
+from utils.enemy import Enemy  # Import the Enemy class
+from entries.entity import Entity
 
 class Level1Scene:
     def __init__(self):
@@ -21,7 +23,8 @@ class Level1Scene:
         self.tile_map = load_tile_map('data/map1.txt')
         self.falling_object_manager = FallingObjectManager(self.assets['plant_img'], self.player, WINDOW_SIZE[1])
         self.font = pygame.font.Font(None, 36)  # Default font and size
-        self.player.is_immune = False
+        self.enemy = Enemy(280, 147)  # Initialize the enemy with the new size
+        self.conversation_active = False
 
     def run(self):
         while True:
@@ -64,9 +67,11 @@ class Level1Scene:
             self.falling_object_manager.create_falling_object()
             self.falling_object_manager.update_and_render(display, scroll)
 
+            # Render the enemy
+            self.enemy.render(display, scroll)
+
             # Check if player has reached the top of the 1s
             if self.player.entity.y < self.get_top_of_ones():
-                print("Player is immune")
                 self.player.is_immune = True
             else:
                 self.player.is_immune = False
@@ -104,6 +109,14 @@ class Level1Scene:
 
             screen.blit(pygame.transform.scale(display, screen.get_size()), (0, 0))
             self.render_health()
+
+            # Check for interaction with the enemy
+            if self.player.entity.check_collision(self.enemy.entity):
+                self.conversation_active = True
+                self.show_conversation()
+            else:
+                self.conversation_active = False
+
             pygame.display.update()
             clock.tick(60)
 
@@ -122,3 +135,7 @@ class Level1Scene:
                 if tile == 1:
                     return y * 16  # Assuming each tile is 16 pixels high
         return float('inf')  # Return a very high value if no 1s are found
+
+    def show_conversation(self):
+        conversation_text = self.font.render("Hello, Player!", True, (255, 255, 255))
+        screen.blit(conversation_text, (WINDOW_SIZE[0] // 2 - 100, WINDOW_SIZE[1] // 2 - 50))
