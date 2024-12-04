@@ -35,7 +35,8 @@ class Quiz:
             self.dialog_window.render(self.screen)
             self.showed_score = True
             pygame.display.update()
-            return
+            pygame.time.delay(5000)  # Display the text for 5 seconds
+            return True  # Indicate that the quiz is finished
 
         current_question = self.get_current_question()
         question_text = current_question["problem"]
@@ -44,6 +45,7 @@ class Quiz:
         self.show_answer_choices()
         self.show_score_and_progress()
         pygame.display.update()  # Ensure the screen is updated
+        return False  # Indicate that the quiz is not finished yet
 
     def show_answer_choices(self):
         answer_choices = self.get_current_question()["answer_choices"]

@@ -151,8 +151,8 @@ class Level1Scene:
             self.render_health()
 
             if not self.conversation_active and not self.problem_solved and self.conversation_shown and not self.quiz.is_finished():
-                self.quiz.show_question()
-                pygame.display.update()  # Ensure the screen is updated immediately
+                if self.quiz.show_question():
+                    return "level_selection"  # Transition to level selection if quiz is finished
 
             if self.player.entity.check_collision(self.enemy.entity) and self.dialog_window.dialog_shown:
                 self.conversation_active = True
