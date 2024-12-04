@@ -15,8 +15,13 @@ class DialogWindow:
         self.background_image = pygame.transform.scale(self.background_image, (self.width, self.height))
         self.text_color = (255, 255, 255)
         self.padding = 50
+        self.current_line_index = 0
+        self.dialog_lines = []
+        self.dialog_shown = True  # Add a flag to track if the dialog has been shown
 
     def render(self, screen):
+        if not self.dialog_shown:
+            return  # Do not render if the dialog has been shown
         # Draw background
         dialog_rect = pygame.Rect(self.position[0], self.position[1], self.width, self.height)
         screen.blit(self.background_image, dialog_rect)
@@ -66,3 +71,6 @@ class DialogWindow:
 
     def is_dialog_ended(self):
         return self.current_line_index == -1
+
+    def set_dialog_shown(self, shown):
+        self.dialog_shown = shown  # Method to set the dialog_shown flag
