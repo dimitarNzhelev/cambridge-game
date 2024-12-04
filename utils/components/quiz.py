@@ -42,6 +42,7 @@ class Quiz:
         self.dialog_window.set_text(question_text)
         self.dialog_window.render(self.screen)
         self.show_answer_choices()
+        self.show_score_and_progress()
         pygame.display.update()  # Ensure the screen is updated
 
     def show_answer_choices(self):
@@ -64,3 +65,15 @@ class Quiz:
             if choice_rect.collidepoint(mouse_pos):
                 self.check_answer(choice)
                 break
+
+    def show_score_and_progress(self):
+        score_text = self.font.render(f"Score: {self.get_score()}", True, (255, 255, 255))
+        progress_text = self.font.render(f"Question: {self.questions_index + 1}/{len(self.questions)}", True, (255, 255, 255))
+        
+        score_x = self.dialog_window.position[0] + self.dialog_window.width - score_text.get_width() - 50
+        score_y = self.dialog_window.position[1] + self.dialog_window.height - score_text.get_height() - 50
+        progress_x = self.dialog_window.position[0] + 30
+        progress_y = self.dialog_window.position[1] + self.dialog_window.height - progress_text.get_height() - 50
+        
+        self.screen.blit(score_text, (score_x, score_y))
+        self.screen.blit(progress_text, (progress_x, progress_y))
