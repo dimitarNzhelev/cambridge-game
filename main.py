@@ -20,6 +20,7 @@ class Game:
             elif self.current_scene == "level_selection":
                 self.current_scene = self.scenes["level_selection"].run()
             elif self.current_scene == "level1":
+                self.scenes["level1"] = Level1Scene()  # Re-initialize the level
                 self.current_scene = self.scenes["level1"].run()
 
 if __name__ == "__main__":

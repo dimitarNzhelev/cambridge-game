@@ -12,6 +12,9 @@ from utils.components.quiz import Quiz
 
 class Level1Scene:
     def __init__(self):
+        self.reset()
+
+    def reset(self):
         self.assets = load_assets()
         self.grass_sound_timer = 0
         self.player = Player(166, 600)
@@ -39,6 +42,7 @@ class Level1Scene:
         self.dialog_window.set_dialog_shown(True)  # Ensure the dialog is not shown initially
 
     def run(self):
+        self.reset()
         while True:
             display.fill((146, 244, 255))  # clear screen by filling it with blue
 
@@ -90,9 +94,7 @@ class Level1Scene:
 
             # Check if player is dead
             if self.player.health <= 0:
-                self.show_game_over()
-                time.sleep(5)
-                return "level_selection"
+                return self.show_game_over()
 
             for event in pygame.event.get():  # event loop
                 if event.type == pygame.QUIT:
@@ -172,6 +174,8 @@ class Level1Scene:
         game_over_text = self.font.render("YOU LOST", True, (255, 0, 0))
         screen.blit(game_over_text, (WINDOW_SIZE[0] // 2 - 100, WINDOW_SIZE[1] // 2 - 50))
         pygame.display.update()
+        pygame.time.delay(2000)  # Display the text for 2 seconds
+        return "level_selection"
 
     def show_math_problem(self):
         if self.current_problem_index < len(self.current_problems):
