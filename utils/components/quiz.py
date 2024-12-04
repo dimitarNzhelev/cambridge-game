@@ -44,26 +44,36 @@ class Quiz:
         self.dialog_window.render(self.screen)
         self.show_answer_choices()
         self.show_score_and_progress()
-        pygame.display.update()  # Ensure the screen is updated
+        pygame.display.update()  # Ensure the screen is updatedd
         return False  # Indicate that the quiz is not finished yet
 
     def show_answer_choices(self):
-        answer_choices = self.get_current_question()["answer_choices"]
         y_offset = self.dialog_window.position[1] + self.dialog_window.padding + self.dialog_window.font.size(self.dialog_window.text)[1] + 20
+        mouse_pos = pygame.mouse.get_pos()
+        spacing = 50  # Increase the spacing between answers
+        rect_padding = 10  # Add padding to make the rect bigger
+        current_question = self.get_current_question()
+        question_text = current_question["problem"]
+        self.dialog_window.set_text(question_text)
 
-        for i, choice in enumerate(answer_choices):
-            choice_text = self.font.render(str(choice), True, (255, 255, 255))
-            x_offset = self.dialog_window.position[0] + (self.dialog_window.width - choice_text.get_width()) // 2
-            self.screen.blit(choice_text, (x_offset, y_offset + i * 30))
+        for i, choice in enumerate(current_question["answer_choices"]):
+            choice_text = str(choice)
+            x_offset = self.dialog_window.position[0] + (self.dialog_window.width - self.font.size(choice_text)[0]) // 2
+            choice_rect = pygame.Rect(x_offset - rect_padding, y_offset + i * spacing - rect_padding, self.font.size(choice_text)[0] + 2 * rect_padding, self.font.size(choice_text)[1] + 2 * rect_padding)
+            if choice_rect.collidepoint(mouse_pos):
+                self.dialog_window.render_text(self.screen, choice_text, (x_offset, y_offset + i * spacing), (255, 0, 0))
+            else:
+                self.dialog_window.render_text(self.screen, choice_text, (x_offset, y_offset + i * spacing), (255, 255, 255))
 
     def handle_mouse_click(self, mouse_pos):
-        answer_choices = self.get_current_question()["answer_choices"]
         y_offset = self.dialog_window.position[1] + self.dialog_window.padding + self.dialog_window.font.size(self.dialog_window.text)[1] + 20
+        rect_padding = 10  # Add padding to make the rect bigger
+        current_question = self.get_current_question()
 
-        for i, choice in enumerate(answer_choices):
-            choice_text = self.font.render(str(choice), True, (255, 255, 255))
-            x_offset = self.dialog_window.position[0] + (self.dialog_window.width - choice_text.get_width()) // 2
-            choice_rect = pygame.Rect(x_offset, y_offset + i * 30, choice_text.get_width(), choice_text.get_height())
+        for i, choice in enumerate(current_question["answer_choices"]):
+            choice_text = str(choice)
+            x_offset = self.dialog_window.position[0] + (self.dialog_window.width - self.font.size(choice_text)[0]) // 2
+            choice_rect = pygame.Rect(x_offset - rect_padding, y_offset + i * 50 - rect_padding, self.font.size(choice_text)[0] + 2 * rect_padding, self.font.size(choice_text)[1] + 2 * rect_padding)
             if choice_rect.collidepoint(mouse_pos):
                 self.check_answer(choice)
                 break

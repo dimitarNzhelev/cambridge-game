@@ -54,6 +54,10 @@ class DialogWindow:
             screen.blit(line_surface, (x_offset, y_offset))
             y_offset += line_surface.get_height()
 
+    def render_text(self, screen, text, position, color):
+        text_surface = self.font.render(text, True, color)
+        screen.blit(text_surface, position)
+
     def set_text(self, text):
         self.text = text
 

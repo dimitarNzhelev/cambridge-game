@@ -153,6 +153,7 @@ class Level1Scene:
             if not self.conversation_active and not self.problem_solved and self.conversation_shown and not self.quiz.is_finished():
                 if self.quiz.show_question():
                     return "level_selection"  # Transition to level selection if quiz is finished
+                self.quiz.show_answer_choices()  # Update hover effect for answer choices
 
             if self.player.entity.check_collision(self.enemy.entity) and self.dialog_window.dialog_shown:
                 self.conversation_active = True
