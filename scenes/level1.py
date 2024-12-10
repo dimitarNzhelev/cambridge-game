@@ -1,6 +1,6 @@
 # scenes/level1.py
 import pygame, sys, time
-from settings import screen, display, clock, DISPLAY_SIZE, WINDOW_SIZE
+from settings import screen, display, clock, DISPLAY_SIZE
 from utils.assets import load_assets
 from utils.components.player import Player
 from utils.world import load_tile_map
@@ -27,11 +27,11 @@ class Level1Scene:
             [0.5, [300, 80, 120, 400]]
         ]
         self.tile_map = load_tile_map('data/map1.txt')
-        self.falling_object_manager = FallingObjectManager(self.assets['plant_img'], self.player, WINDOW_SIZE[1])
+        self.falling_object_manager = FallingObjectManager(self.assets['plant_img'], self.player, screen.get_size()[1])
         self.font = pygame.font.Font(None, 36)  # Default font and size
         self.enemy = Enemy(280, 147)  # Initialize the enemy with the new size
         self.conversation_active = False
-        self.dialog_window = DialogWindow("", "", (50, 50), WINDOW_SIZE[0] - 100, WINDOW_SIZE[1] - 100, 64)
+        self.dialog_window = DialogWindow("", "", (50, 50), screen.get_size()[0] - screen.get_size()[0]//10, screen.get_size()[1] - screen.get_size()[1]//10, screen.get_size()[1]//20)
         self.load_dialog_from_file('data/enemies/level1.npc')
         self.math_problems = get_random_problems(load_math_problems(1), 2)
         self.current_problems = []
@@ -169,11 +169,11 @@ class Level1Scene:
 
     def render_health(self):
         for i in range(self.player.health):
-            screen.blit(pygame.image.load('data/images/heart.jpg'), (WINDOW_SIZE[0] - 60 * (i + 1), 10))
+            screen.blit(pygame.image.load('data/images/heart.jpg'), (screen.get_size()[0] - 60 * (i + 1), 10))
 
     def show_game_over(self):
         game_over_text = self.font.render("YOU LOST", True, (255, 0, 0))
-        screen.blit(game_over_text, (WINDOW_SIZE[0] // 2 - 100, WINDOW_SIZE[1] // 2 - 50))
+        screen.blit(game_over_text, (screen.get_size()[0] // 2 - 100, screen.get_size()[1] // 2 - 50))
         pygame.display.update()
         pygame.time.delay(2000)  # Display the text for 2 seconds
         return "level_selection"
@@ -182,7 +182,7 @@ class Level1Scene:
         if self.current_problem_index < len(self.current_problems):
             problem_text = self.current_problems[self.current_problem_index]
             problem_surface = self.font.render(problem_text, True, (0, 0, 0))
-            screen.blit(problem_surface, (WINDOW_SIZE[0] // 2 - problem_surface.get_width() // 2, WINDOW_SIZE[1] // 2 - problem_surface.get_height() // 2))
+            screen.blit(problem_surface, (screen.get_size()[0] // 2 - problem_surface.get_width() // 2, screen.get_size()[1] // 2 - problem_surface.get_height() // 2))
 
     def check_answer(self):
         # Implement logic to check the player's answer

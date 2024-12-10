@@ -1,7 +1,7 @@
 # scenes/menu.py
 import pygame
 import sys
-from settings import WINDOW_SIZE, screen
+from settings import screen
 from utils.components.ui.button import Button
 from utils.components.resource_loader import ResourceLoader
 
@@ -9,7 +9,7 @@ class MenuScene:
     def __init__(self):
         self.loader = ResourceLoader.get_instance()
         self.background = self.loader.get_image("data/images/home/Background.png")
-        self.background = pygame.transform.scale(self.background, WINDOW_SIZE)
+        self.background = pygame.transform.scale(self.background, screen.get_size())
         
         # Cache font
         self.font_path = "data/images/home/font.ttf"
@@ -29,27 +29,27 @@ class MenuScene:
 
             # Create title text
             title1_surf, title1_rect = self.create_text(
-                "Cambridge", 100, "#b68f40", (WINDOW_SIZE[0]//2, 100)
+                "Cambridge", screen.get_size()[1]//10, "#b68f40", (screen.get_size()[0]//2, screen.get_size()[1]//2 - screen.get_size()[1]//10)
             )
             title2_surf, title2_rect = self.create_text(
-                "Gamble", 100, "#b68f40", (WINDOW_SIZE[0]//2, 200)
+                "Gamble", screen.get_size()[1]//10, "#b68f40", (screen.get_size()[0]//2, screen.get_size()[1]//2)
             )
 
             # Create buttons
             play_button = Button(
                 image=self.loader.get_image("data/images/home/Play Rect.png"),
-                pos=(WINDOW_SIZE[0]//2, 350),
+                pos=(screen.get_size()[0]//2, screen.get_size()[1]//2 + screen.get_size()[1]//10),
                 text_input="PLAY",
-                font=self.get_font(75),
+                font=self.get_font(screen.get_size()[1]//20),
                 base_color="#d7fcd4",
                 hovering_color="White"
             )
             
             quit_button = Button(
                 image=self.loader.get_image("data/images/home/Quit Rect.png"),
-                pos=(WINDOW_SIZE[0]//2, 550),
+                pos=(screen.get_size()[0]//2, screen.get_size()[1]//2 + 2 * screen.get_size()[1]//10 ),
                 text_input="QUIT",
-                font=self.get_font(75),
+                font=self.get_font(screen.get_size()[1]//20),
                 base_color="#d7fcd4",
                 hovering_color="White"
             )
@@ -72,6 +72,6 @@ class MenuScene:
                         return "level_selection"
                     if quit_button.checkForInput(menu_mouse_pos):
                         pygame.quit()
-                        sys.exit()
+                        sys.exit()        
 
             pygame.display.update()

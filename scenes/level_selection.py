@@ -1,7 +1,7 @@
 # scenes/level_selection.py
 import pygame
 import sys
-from settings import WINDOW_SIZE, screen
+from settings import screen
 from utils.components.ui.button import Button
 from utils.components.resource_loader import ResourceLoader
 
@@ -9,7 +9,7 @@ class LevelSelectionScene:
     def __init__(self):
         self.loader = ResourceLoader.get_instance()
         self.background = self.loader.get_image("data/images/home/Background.png")
-        self.background = pygame.transform.scale(self.background, WINDOW_SIZE)
+        self.background = pygame.transform.scale(self.background, screen.get_size())
         
         # Cache font
         self.font_path = "data/images/home/font.ttf"
@@ -29,27 +29,27 @@ class LevelSelectionScene:
 
             # Create title text
             title1_surf, title1_rect = self.create_text(
-                "Select", 100, "#b68f40", (WINDOW_SIZE[0]//2, 100)
+                "Select", screen.get_size()[1]//10, "#b68f40", (screen.get_size()[0]//2, screen.get_size()[1]//2 - screen.get_size()[1]//10)
             )
             title2_surf, title2_rect = self.create_text(
-                "Level", 100, "#b68f40", (WINDOW_SIZE[0]//2, 200)
+                "Level", screen.get_size()[1]//10, "#b68f40", (screen.get_size()[0]//2, screen.get_size()[1]//2)
             )
 
             # Create buttons for levels
             level1_button = Button(
                 image=self.loader.get_image("data/images/home/Play Rect.png"),
-                pos=(WINDOW_SIZE[0]//2, 350),
+                pos=(screen.get_size()[0]//2, screen.get_size()[1]//2 + screen.get_size()[1]//10),
                 text_input="LEVEL 1",
-                font=self.get_font(75),
+                font=self.get_font(screen.get_size()[1]//20),
                 base_color="#d7fcd4",
                 hovering_color="White"
             )
             
             back_button = Button(
                 image=self.loader.get_image("data/images/home/Quit Rect.png"),
-                pos=(WINDOW_SIZE[0]//2, 550),
+                pos=(screen.get_size()[0]//2, screen.get_size()[1]//2 + 2 * screen.get_size()[1]//10 ),
                 text_input="BACK",
-                font=self.get_font(75),
+                font=self.get_font(screen.get_size()[1]//20),
                 base_color="#d7fcd4",
                 hovering_color="White"
             )
@@ -73,4 +73,4 @@ class LevelSelectionScene:
                     if back_button.checkForInput(menu_mouse_pos):
                         return "menu"
 
-            pygame.display.update()# scenes/level_selection.py
+            pygame.display.update()

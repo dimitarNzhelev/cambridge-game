@@ -1,5 +1,5 @@
 import pygame
-from settings import WINDOW_SIZE
+from settings import screen
 from utils.components.ui.dialog_window import DialogWindow
 
 class Quiz:
@@ -9,8 +9,9 @@ class Quiz:
         self.questions_index = 0
         self.showed_score = False
         self.screen = screen
-        self.font = pygame.font.Font(None, 36)
-        self.dialog_window = dialog_window or DialogWindow("", "", (50, 50), WINDOW_SIZE[0] - 100, WINDOW_SIZE[1] - 100, 64)
+        self.font_size = screen.get_size()[0] // 30  # Adjust font size based on screen width
+        self.font = pygame.font.Font(None, self.font_size)
+        self.dialog_window = dialog_window or DialogWindow("", "", (50, 50), screen.get_size()[0] - screen.get_size()[0]//10, screen.get_size()[1] - screen.get_size()[1]//10, screen.get_size()[0]//20)
 
     def get_current_question(self):
         return self.questions[self.questions_index]
@@ -50,8 +51,8 @@ class Quiz:
     def show_answer_choices(self):
         y_offset = self.dialog_window.position[1] + self.dialog_window.padding + self.dialog_window.font.size(self.dialog_window.text)[1] + 20
         mouse_pos = pygame.mouse.get_pos()
-        spacing = 50  # Increase the spacing between answers
-        rect_padding = 10  # Add padding to make the rect bigger
+        spacing = screen.get_size()[0]//20  # Increase the spacing between answers
+        rect_padding = screen.get_size()[0]//80  # Add padding to make the rect bigger
         current_question = self.get_current_question()
         question_text = current_question["problem"]
         self.dialog_window.set_text(question_text)
@@ -67,25 +68,28 @@ class Quiz:
 
     def handle_mouse_click(self, mouse_pos):
         y_offset = self.dialog_window.position[1] + self.dialog_window.padding + self.dialog_window.font.size(self.dialog_window.text)[1] + 20
-        rect_padding = 10  # Add padding to make the rect bigger
+        rect_padding = screen.get_size()[0]//80  # Add padding to make the rect bigger
         current_question = self.get_current_question()
 
         for i, choice in enumerate(current_question["answer_choices"]):
             choice_text = str(choice)
             x_offset = self.dialog_window.position[0] + (self.dialog_window.width - self.font.size(choice_text)[0]) // 2
-            choice_rect = pygame.Rect(x_offset - rect_padding, y_offset + i * 50 - rect_padding, self.font.size(choice_text)[0] + 2 * rect_padding, self.font.size(choice_text)[1] + 2 * rect_padding)
+            choice_rect = pygame.Rect(x_offset - rect_padding, y_offset + i * screen.get_size()[0]//20 - rect_padding, self.font.size(choice_text)[0] + 2 * rect_padding, self.font.size(choice_text)[1] + 2 * rect_padding)
             if choice_rect.collidepoint(mouse_pos):
                 self.check_answer(choice)
                 break
 
     def show_score_and_progress(self):
-        score_text = self.font.render(f"Score: {self.get_score()}", True, (255, 255, 255))
-        progress_text = self.font.render(f"Question: {self.questions_index + 1}/{len(self.questions)}", True, (255, 255, 255))
+        score_font_size = screen.get_size()[0] // 30  # Adjust font size based on screen width
+        score_font = pygame.font.Font(None, score_font_size)
         
-        score_x = self.dialog_window.position[0] + self.dialog_window.width - score_text.get_width() - 50
-        score_y = self.dialog_window.position[1] + self.dialog_window.height - score_text.get_height() - 50
-        progress_x = self.dialog_window.position[0] + 30
-        progress_y = self.dialog_window.position[1] + self.dialog_window.height - progress_text.get_height() - 50
+        score_text = score_font.render(f"Score: {self.get_score()}", True, (255, 255, 255))
+        progress_text = score_font.render(f"Question: {self.questions_index + 1}/{len(self.questions)}", True, (255, 255, 255))
+        
+        score_x = self.dialog_window.position[0] + self.dialog_window.width - score_text.get_width() - screen.get_size()[0]//20
+        score_y = self.dialog_window.position[1] + self.dialog_window.height - score_text.get_height() - screen.get_size()[0]//20
+        progress_x = self.dialog_window.position[0] + screen.get_size()[0]//18
+        progress_y = self.dialog_window.position[1] + self.dialog_window.height - progress_text.get_height() - screen.get_size()[0]//20
         
         self.screen.blit(score_text, (score_x, score_y))
         self.screen.blit(progress_text, (progress_x, progress_y))

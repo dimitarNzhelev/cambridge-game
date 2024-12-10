@@ -11,7 +11,7 @@ pygame.init()
 pygame.mixer.set_num_channels(64)
 
 # Set up display
-screen = pygame.display.set_mode(WINDOW_SIZE, 0, 32)
+screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 display = pygame.Surface(DISPLAY_SIZE)
 pygame.display.set_caption('Cambridge Gamble')
 

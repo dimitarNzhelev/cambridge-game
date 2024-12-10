@@ -1,6 +1,5 @@
 # utils/components/dialog_window.py
 import pygame
-from settings import WINDOW_SIZE
 from utils.components.resource_loader import ResourceLoader
 
 class DialogWindow:
