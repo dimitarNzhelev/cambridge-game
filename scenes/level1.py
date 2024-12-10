@@ -168,14 +168,17 @@ class Level1Scene:
             clock.tick(60)
 
     def render_health(self):
+        heart_image = pygame.image.load('data/images/heart.jpg')
+        heart_size = (screen.get_size()[0] // 20, screen.get_size()[0] // 20)
+        scaled_heart = pygame.transform.scale(heart_image, heart_size)
         for i in range(self.player.health):
-            screen.blit(pygame.image.load('data/images/heart.jpg'), (screen.get_size()[0] - 60 * (i + 1), 10))
+            screen.blit(scaled_heart, (screen.get_size()[0] - heart_size[0] * (i + 1), 10))
 
     def show_game_over(self):
         game_over_text = self.font.render("YOU LOST", True, (255, 0, 0))
         screen.blit(game_over_text, (screen.get_size()[0] // 2 - 100, screen.get_size()[1] // 2 - 50))
         pygame.display.update()
-        pygame.time.delay(2000)  # Display the text for 2 seconds
+        pygame.time.delay(2000)
         return "level_selection"
 
     def show_math_problem(self):

@@ -1,4 +1,3 @@
-# main.py
 import pygame
 from scenes.menu import MenuScene
 from scenes.level1 import Level1Scene
