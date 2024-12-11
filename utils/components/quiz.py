@@ -30,6 +30,11 @@ class Quiz:
     def get_score(self):
         return self.score
 
+    def reset(self):
+        self.score = 0
+        self.questions_index = 0
+        self.showed_score = False
+
     def show_question(self):
         if self.is_finished_no_score():
             self.dialog_window.set_text(f"Quiz finished! Your score: {self.get_score()}")

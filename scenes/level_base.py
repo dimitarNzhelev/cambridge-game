@@ -10,8 +10,9 @@ from utils.math_problems import load_math_problems, get_random_problems
 from utils.components.quiz import Quiz
 
 class LevelBaseScene:
-    def __init__(self, level_number):
+    def __init__(self, level_number, scores):
         self.level_number = level_number
+        self.scores = scores
         self.load_config()
         self.reset()
 
@@ -160,6 +161,9 @@ class LevelBaseScene:
 
             if not self.conversation_active and not self.problem_solved and self.conversation_shown and not self.quiz.is_finished():
                 if self.quiz.show_question():
+                    score = self.quiz.get_score()
+                    if score > self.scores.get(self.level_number, 0):
+                        self.scores[self.level_number] = score
                     return "level_selection"  # Transition to level selection if quiz is finished
                 self.quiz.show_answer_choices()  # Update hover effect for answer choices
 

@@ -6,7 +6,8 @@ from utils.components.ui.button import Button
 from utils.components.resource_loader import ResourceLoader
 
 class LevelSelectionScene:
-    def __init__(self):
+    def __init__(self, scores):
+        self.scores = scores
         self.loader = ResourceLoader.get_instance()
         self.background = self.loader.get_image("data/images/home/Background.png")
         self.background = pygame.transform.scale(self.background, screen.get_size())
@@ -61,11 +62,15 @@ class LevelSelectionScene:
             screen.blit(title1_surf, title1_rect)
             screen.blit(title2_surf, title2_rect)
 
-            for button in buttons + [back_button]:
+            for i, button in enumerate(buttons):
                 button.changeColor(menu_mouse_pos)
                 button.update(screen)
+                score_text, score_rect = self.create_text(
+                    f"High Score: {self.scores.get(i+1, 0)}", screen.get_size()[1]//30, "#b68f40", 
+                    (screen.get_size()[0]//2, screen.get_size()[1]//2 + (i * screen.get_size()[1]//10) + screen.get_size()[1]//20)
+                )
+                screen.blit(score_text, score_rect)
 
-            # Handle events
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
