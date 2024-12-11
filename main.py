@@ -1,26 +1,22 @@
 import pygame
 from scenes.menu import MenuScene
-from scenes.level1 import Level1Scene
 from scenes.level_selection import LevelSelectionScene
+from scenes.level_base import LevelBaseScene
 
 class Game:
     def __init__(self):
         self.current_scene = "menu"
-        self.scenes = {
-            "menu": MenuScene(),
-            "level_selection": LevelSelectionScene(),
-            "level1": Level1Scene()
-        }
     
     def run(self):
         while True:
             if self.current_scene == "menu":
-                self.current_scene = self.scenes["menu"].run()
+                scene = MenuScene()
             elif self.current_scene == "level_selection":
-                self.current_scene = self.scenes["level_selection"].run()
-            elif self.current_scene == "level1":
-                self.scenes["level1"] = Level1Scene()  # Re-initialize the level
-                self.current_scene = self.scenes["level1"].run()
+                scene = LevelSelectionScene()
+            elif self.current_scene.startswith("level"):
+                level_number = int(self.current_scene.replace("level", ""))
+                scene = LevelBaseScene(level_number)
+            self.current_scene = scene.run()
 
 if __name__ == "__main__":
     pygame.init()

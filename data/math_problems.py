@@ -2,8 +2,8 @@ math_problems = [
     {
         "level": 1,
         "problem": "What is 1 + 1?",
-        "answer": 2,
-        "answer_choices": [2, 3, 4, 5]
+        "answer": "limasdas",
+        "answer_choices": ["limasdas", 3, 4, 5]
     },
     {
         "level": 1,

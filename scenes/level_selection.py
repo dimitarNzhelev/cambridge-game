@@ -36,18 +36,21 @@ class LevelSelectionScene:
             )
 
             # Create buttons for levels
-            level1_button = Button(
-                image=self.loader.get_image("data/images/home/Play Rect.png"),
-                pos=(screen.get_size()[0]//2, screen.get_size()[1]//2 + screen.get_size()[1]//10),
-                text_input="LEVEL 1",
-                font=self.get_font(screen.get_size()[1]//20),
-                base_color="#d7fcd4",
-                hovering_color="White"
-            )
+            buttons = []
+            for i in range(1, 6):  # Assuming you have 5 levels
+                button = Button(
+                    image=self.loader.get_image("data/images/home/Play Rect.png"),
+                    pos=(screen.get_size()[0]//2, screen.get_size()[1]//2 + (i * screen.get_size()[1]//10)),
+                    text_input=f"LEVEL {i}",
+                    font=self.get_font(screen.get_size()[1]//20),
+                    base_color="#d7fcd4",
+                    hovering_color="White"
+                )
+                buttons.append(button)
             
             back_button = Button(
                 image=self.loader.get_image("data/images/home/Quit Rect.png"),
-                pos=(screen.get_size()[0]//2, screen.get_size()[1]//2 + 2 * screen.get_size()[1]//10 ),
+                pos=(screen.get_size()[0]//2, screen.get_size()[1]//2 + (6 * screen.get_size()[1]//10)),
                 text_input="BACK",
                 font=self.get_font(screen.get_size()[1]//20),
                 base_color="#d7fcd4",
@@ -58,7 +61,7 @@ class LevelSelectionScene:
             screen.blit(title1_surf, title1_rect)
             screen.blit(title2_surf, title2_rect)
 
-            for button in [level1_button, back_button]:
+            for button in buttons + [back_button]:
                 button.changeColor(menu_mouse_pos)
                 button.update(screen)
 
@@ -68,8 +71,9 @@ class LevelSelectionScene:
                     pygame.quit()
                     sys.exit()
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    if level1_button.checkForInput(menu_mouse_pos):
-                        return "level1"
+                    for i, button in enumerate(buttons):
+                        if button.checkForInput(menu_mouse_pos):
+                            return f"level{i+1}"
                     if back_button.checkForInput(menu_mouse_pos):
                         return "menu"
 

@@ -2,14 +2,15 @@ import random
 from utils.components.falling_object import FallingObject
 
 class FallingObjectManager:
-    def __init__(self, falling_object_image, player, screen_height):
+    def __init__(self, falling_object_image, player, screen_height, intensity=1):
         self.falling_objects = []
         self.falling_object_image = falling_object_image
         self.player = player
         self.screen_height = screen_height
+        self.intensity = intensity
 
     def create_falling_object(self):
-        if not self.player.is_immune and random.randint(1, 100) == 1:  # Adjust the frequency as needed
+        if not self.player.is_immune and random.randint(1, 100) <= self.intensity:  # Adjust the frequency as needed
             new_object = FallingObject(random.randint(0, 300), -20, self.falling_object_image)
             self.falling_objects.append(new_object)
 
