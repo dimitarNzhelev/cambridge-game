@@ -14,6 +14,11 @@
             "player_start": [166, 600],
             "falling_object_intensity": 1.4,
             "enemy_position": [94, 100]
+        },
+        "4": {
+            "player_start": [166, 648],
+            "falling_object_intensity": 1.4,
+            "enemy_position": [166, 100]
         }
     }
 }
