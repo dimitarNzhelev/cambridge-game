@@ -110,18 +110,19 @@ class LevelBaseScene:
                     pygame.quit()
                     sys.exit()
                 if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_w:
-                        if self.player.air_timer < 6:
-                            # self.assets['jump_sound'].play()
-                            self.player.vertical_momentum = -5
-                    if event.key == pygame.K_UP:
-                        if self.player.air_timer < 6:
-                            # self.assets['jump_sound'].play()
-                            self.player.vertical_momentum = -5
-                    if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
-                        self.player.moving_right = True
-                    if event.key == pygame.K_LEFT or event.key == pygame.K_a:
-                        self.player.moving_left = True
+                    if not self.conversation_active:  # Disable movement if conversation is active
+                        if event.key == pygame.K_w:
+                            if self.player.air_timer < 6:
+                                # self.assets['jump_sound'].play()
+                                self.player.vertical_momentum = -5
+                        if event.key == pygame.K_UP:
+                            if self.player.air_timer < 6:
+                                # self.assets['jump_sound'].play()
+                                self.player.vertical_momentum = -5
+                        if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
+                            self.player.moving_right = True
+                        if event.key == pygame.K_LEFT or event.key == pygame.K_a:
+                            self.player.moving_left = True
                     if event.key == pygame.K_RETURN and self.conversation_active:
                         self.dialog_window.advance_dialog()
                         if self.dialog_window.is_dialog_ended():
@@ -144,10 +145,11 @@ class LevelBaseScene:
                             self.check_answer()
 
                 if event.type == pygame.KEYUP:
-                    if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
-                        self.player.moving_right = False
-                    if event.key == pygame.K_LEFT or event.key == pygame.K_a:
-                        self.player.moving_left = False
+                    if not self.conversation_active:  # Disable movement if conversation is active
+                        if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
+                            self.player.moving_right = False
+                        if event.key == pygame.K_LEFT or event.key == pygame.K_a:
+                            self.player.moving_left = False
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if self.quiz and not self.quiz.is_finished():
                         self.quiz.handle_mouse_click(event.pos)
@@ -169,6 +171,8 @@ class LevelBaseScene:
 
             if self.player.entity.check_collision(self.enemy.entity) and self.dialog_window.dialog_shown:
                 self.conversation_active = True
+                self.player.moving_left = False
+                self.player.moving_right = False
                 self.show_conversation()
             else:
                 self.conversation_active = False
