@@ -23,6 +23,7 @@ class LevelBaseScene:
         self.player_start = level_config['player_start']
         self.falling_object_intensity = level_config['falling_object_intensity']
         self.enemy_position = level_config['enemy_position']
+        self.background_object_config = level_config['background_object']
 
     def reset(self):
         self.assets = load_assets()
@@ -30,12 +31,12 @@ class LevelBaseScene:
         self.player = Player(*self.player_start)
         self.true_scroll = [self.player.entity.x - DISPLAY_SIZE[0] // 2, 0]
         self.background_objects = [
-            [0.25, [120, 10, 70, 400]],
-            [0.25, [280, 30, 40, 400]],
-            [0.5, [30, 40, 40, 400]],
-            [0.5, [130, 90, 100, 400]],
-            [0.5, [300, 80, 120, 400]]
+            [
+                self.background_object_config['parallax_factor'],
+                self.background_object_config['position']
+            ]
         ]
+        self.background_image = pygame.image.load(self.background_object_config['image'])
         self.tile_map = load_tile_map(f'data/map{self.level_number}.txt')
         self.falling_object_manager = FallingObjectManager(self.assets['plant_img'], self.player, screen.get_size()[1], self.falling_object_intensity)
         self.font = pygame.font.Font(None, 36)  # Default font and size
@@ -70,12 +71,10 @@ class LevelBaseScene:
                 obj_rect = pygame.Rect(
                     background_object[1][0] - scroll[0] * background_object[0],
                     background_object[1][1] - scroll[1] * background_object[0],
-                    background_object[1][2], background_object[1][3]
+                    self.background_image.get_width(),
+                    self.background_image.get_height()
                 )
-                if background_object[0] == 0.5:
-                    pygame.draw.rect(display, (20, 170, 150), obj_rect)
-                else:
-                    pygame.draw.rect(display, (15, 76, 73), obj_rect)
+                display.blit(self.background_image, obj_rect)
 
             tile_rects = []
             for y, row in enumerate(self.tile_map):
