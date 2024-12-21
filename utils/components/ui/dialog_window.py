@@ -1,9 +1,10 @@
 # utils/components/dialog_window.py
 import pygame
 from utils.components.resource_loader import ResourceLoader
+from utils.components.ui.button import Button
 
 class DialogWindow:
-    def __init__(self, font_path, text, position, width, height, font_size=36):
+    def __init__(self,font_path, text, position, width, height, font_size=36, show_play_button=False):
         self.font = pygame.font.Font(None, font_size)
         self.text = text
         self.position = position
@@ -17,6 +18,16 @@ class DialogWindow:
         self.current_line_index = 0
         self.dialog_lines = []
         self.dialog_shown = True  # Add a flag to track if the dialog has been shown
+        self.show_play_button = show_play_button
+        if self.show_play_button:
+            self.play_button = Button(
+                image=self.loader.get_image("data/images/home/Play Rect.png"),
+                pos=(self.position[0] + self.width // 2, self.position[1] + self.height // 2.4),
+                text_input="PLAY",
+                font=self.font,
+                base_color="#d7fcd4",
+                hovering_color="White"
+            )
 
     def render(self, screen):
         if not self.dialog_shown:
@@ -53,6 +64,9 @@ class DialogWindow:
             screen.blit(line_surface, (x_offset, y_offset))
             y_offset += line_surface.get_height()
 
+        if self.show_play_button:
+            self.play_button.update(screen)
+
     def render_text(self, screen, text, position, color):
         text_surface = self.font.render(text, True, color)
         screen.blit(text_surface, position)
@@ -77,3 +91,8 @@ class DialogWindow:
 
     def set_dialog_shown(self, shown):
         self.dialog_shown = shown  # Method to set the dialog_shown flag
+
+    def check_play_button(self, position):
+        if self.show_play_button:
+            return self.play_button.checkForInput(position)
+        return False

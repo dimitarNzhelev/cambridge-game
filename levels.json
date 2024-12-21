@@ -1,0 +1,50 @@
+[
+    {
+        "name": "Alah ahkbar",
+        "description": "This is the first level.",
+        "position": [20, 12],
+        "size": [170, 180]
+    },
+    {
+        "name": "Level 2",
+        "description": "This is the second level.",
+        "position": [310, 20],
+        "size": [170, 180]
+    },
+    {
+        "name": "Level 3",
+        "description": "This is the third level.",
+        "position": [610, 20],
+        "size": [170, 180]
+    },
+    {
+        "name": "Level 4",
+        "description": "This is the fourth level.",
+        "position": [150, 210],
+        "size": [170, 180]
+    },
+    {
+        "name": "Level 5",
+        "description": "This is the fifth level.",
+        "position": [460, 210],
+        "size": [170, 185]
+    },
+    {
+        "name": "Level 6",
+        "description": "This is the sixth level.",
+        "position": [20, 410],
+        "size": [175, 180]
+    },
+    {
+        "name": "Level 7",
+        "description": "This is the seventh level.",
+        "position": [295, 410],
+        "size": [175, 185]
+    },
+    {
+        "name": "Level 8",
+        "description": "This is the eighth level.",
+        "position": [610, 410],
+        "size": [170, 175]
+    }
+]

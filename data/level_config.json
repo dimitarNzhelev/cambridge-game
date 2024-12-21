@@ -5,7 +5,7 @@
             "falling_object_intensity": 1,
             "enemy_position": [280, 147],
             "background_object": {
-                "image": "data/images/background_object1.png",
+                "image": "data/images/castle.webp",
                 "position": [100, 100],
                 "parallax_factor": 0.5
             }
