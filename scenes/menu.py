@@ -21,6 +21,11 @@ class MenuScene:
         text_surface = self.get_font(size).render(text, True, color)
         text_rect = text_surface.get_rect(center=center_position)
         return text_surface, text_rect
+
+    def create_button_surface(self, size, color, alpha):
+        surface = pygame.Surface(size, pygame.SRCALPHA)
+        surface.fill((*color, alpha))
+        return surface
     
     def run(self):
         while True:
@@ -36,8 +41,13 @@ class MenuScene:
             )
 
             # Create buttons
+            button_size = (screen.get_size()[0]//3, screen.get_size()[1]//15)
+            play_button_surface = self.create_button_surface(button_size, (255, 255, 255), 50)
+            credits_button_surface = self.create_button_surface(button_size, (255, 255, 255), 50)
+            quit_button_surface = self.create_button_surface(button_size, (255, 255, 255), 50)
+
             play_button = Button(
-                image=self.loader.get_image("data/images/home/Play Rect.png"),
+                image=play_button_surface,
                 pos=(screen.get_size()[0]//2, screen.get_size()[1]//2 + screen.get_size()[1]//10),
                 text_input="PLAY",
                 font=self.get_font(screen.get_size()[1]//20),
@@ -45,9 +55,18 @@ class MenuScene:
                 hovering_color="White"
             )
             
+            credits_button = Button(
+                image=credits_button_surface,
+                pos=(screen.get_size()[0]//2, screen.get_size()[1]//2 + 2 * screen.get_size()[1]//10),
+                text_input="CREDITS",
+                font=self.get_font(screen.get_size()[1]//20),
+                base_color="#d7fcd4",
+                hovering_color="White"
+            )
+            
             quit_button = Button(
-                image=self.loader.get_image("data/images/home/Quit Rect.png"),
-                pos=(screen.get_size()[0]//2, screen.get_size()[1]//2 + 2 * screen.get_size()[1]//10 ),
+                image=quit_button_surface,
+                pos=(screen.get_size()[0]//2, screen.get_size()[1]//2 + 3 * screen.get_size()[1]//10),
                 text_input="QUIT",
                 font=self.get_font(screen.get_size()[1]//20),
                 base_color="#d7fcd4",
@@ -58,7 +77,7 @@ class MenuScene:
             screen.blit(title1_surf, title1_rect)
             screen.blit(title2_surf, title2_rect)
 
-            for button in [play_button, quit_button]:
+            for button in [play_button, credits_button, quit_button]:
                 button.changeColor(menu_mouse_pos)
                 button.update(screen)
 
@@ -70,6 +89,8 @@ class MenuScene:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if play_button.checkForInput(menu_mouse_pos):
                         return "level_selection"
+                    if credits_button.checkForInput(menu_mouse_pos):
+                        return "credits"
                     if quit_button.checkForInput(menu_mouse_pos):
                         pygame.quit()
                         sys.exit()        
