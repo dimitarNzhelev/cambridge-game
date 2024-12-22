@@ -11,6 +11,8 @@ def set_global_colorkey(colorkey: Tuple[int, int, int]) -> None:
 
 def animation_sequence(sequence: List[List[int]], 
                       base_path: str,
+                      size_x: int = 10,
+                      size_y: int = 26,
                       colorkey: Tuple[int, int, int] = (255, 255, 255),
                       transparency: int = 255) -> List[str]:
     """
@@ -22,7 +24,9 @@ def animation_sequence(sequence: List[List[int]],
     for frame in sequence:
         frame_index, duration = frame
         image_id = f"{base_path}{base_path.split('/')[-2]}_{frame_index}"
-        image = pygame.image.load(f"{image_id}.png").convert()
+        image_temp = pygame.image.load(f"{image_id}.png").convert_alpha()  # Use convert_alpha for transparency
+        image = pygame.transform.scale(image_temp, (size_x, size_y))
+        # Remove the background of the image
         image.set_colorkey(colorkey)
         image.set_alpha(transparency)
         animation_database[image_id] = image.copy()

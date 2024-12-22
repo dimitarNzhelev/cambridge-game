@@ -38,7 +38,7 @@ def load_assets():
     
     return assets
 
-def load_animations():
+def load_animations(size_x=7.5, size_y=19.5):
     """Load animations for entities from entity_animations.txt."""
     global animation_higher_database
     with open('data/images/entities/entity_animations.txt', 'r') as f:
@@ -53,7 +53,7 @@ def load_animations():
             tags = parts[2].split(';') if len(parts) > 2 else []
 
             sequence = [[i, duration] for i, duration in enumerate(frame_durations)]
-            anim = animation_sequence(sequence, f'data/images/entities/{anim_path}')
+            anim = animation_sequence(sequence, f'data/images/entities/{anim_path}', size_x, size_y)
             
             if entity_type not in animation_higher_database:
                 animation_higher_database[entity_type] = {}

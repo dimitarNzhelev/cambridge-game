@@ -1,9 +1,9 @@
 {
     "levels": {
         "1": {
-            "player_start": [166, 600],
+            "player_start": [166, 598],
             "falling_object_intensity": 1,
-            "enemy_position": [280, 147],
+            "enemy_position": [280, 144],
             "background_object": {
                 "image": "data/images/castle.webp",
                 "position": [100, 100],
@@ -13,7 +13,7 @@
         "2": {
             "player_start": [166, 600],
             "falling_object_intensity": 1.2,
-            "enemy_position": [280, 147],
+            "enemy_position": [280, 144],
             "background_object": {
                 "image": "data/images/background_object2.png",
                 "position": [150, 150],
@@ -23,7 +23,7 @@
         "3": {
             "player_start": [166, 600],
             "falling_object_intensity": 1.4,
-            "enemy_position": [94, 100],
+            "enemy_position": [94, 97],
             "background_object": {
                 "image": "data/images/background_object3.png",
                 "position": [200, 200],
@@ -33,7 +33,7 @@
         "4": {
             "player_start": [166, 648],
             "falling_object_intensity": 1.4,
-            "enemy_position": [166, 100],
+            "enemy_position": [166, 97],
             "background_object": {
                 "image": "data/images/background_object4.png",
                 "position": [250, 250],

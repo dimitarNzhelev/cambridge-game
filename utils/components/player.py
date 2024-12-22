@@ -2,7 +2,7 @@ import entries.entity as e
 
 class Player:
     def __init__(self, x, y):
-        self.entity = e.Entity(x, y, 5, 13, 'player')
+        self.entity = e.Entity(x, y, 7.5, 19.5, 'player')
         self.moving_right = False
         self.moving_left = False
         self.vertical_momentum = 0

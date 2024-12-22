@@ -167,7 +167,8 @@ class Entity:
         Args:
             image (pygame.Surface): Image to set for the entity
         """
-        self.image = image
+        image_temp = pygame.image.load(image)
+        self.image = pygame.transform.scale(image_temp, (self.size_x, self.size_y))
  
     def set_offset(self,offset):
         """
