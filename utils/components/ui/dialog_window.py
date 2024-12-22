@@ -17,7 +17,7 @@ class DialogWindow:
         self.padding = 50
         self.current_line_index = 0
         self.dialog_lines = []
-        self.dialog_shown = True  # Add a flag to track if the dialog has been shown
+        self.dialog_shown = True
         self.show_play_button = show_play_button
         if self.show_play_button:
             self.play_button = Button(
