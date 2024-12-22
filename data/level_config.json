@@ -6,8 +6,8 @@
             "enemy_position": [280, 144],
             "background_object": {
                 "image": "data/images/castle.webp",
-                "position": [100, 100],
-                "parallax_factor": 0.5
+                "position": [0, 0],
+                "parallax_factor": 0.001
             }
         },
         "2": {
