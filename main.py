@@ -2,12 +2,14 @@ import pygame
 from scenes.menu import MenuScene
 from scenes.level_selection import LevelSelectionScene
 from scenes.level_base import LevelBaseScene
-from scenes.credits import CreditsScene  # Import CreditsScene
+from scenes.credits import CreditsScene 
+from utils.assets import load_assets  # Import load_assets to load music
 
 class Game:
     def __init__(self):
         self.current_scene = "menu"
         self.scores = {}
+        self.assets = load_assets() 
     
     def run(self):
         while True:
