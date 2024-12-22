@@ -68,9 +68,11 @@ class LevelSelectionScene:
                     pygame.quit()
                     sys.exit()
                 if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_ESCAPE and self.dialog_window:
+                    if event.key == pygame.K_ESCAPE and self.dialog_window and self.dialog_window.dialog_shown:
                         self.dialog_window.set_dialog_shown(False)
                         self.dialog_window = None
+                    elif event.key == pygame.K_ESCAPE and not self.dialog_window:
+                        return "menu"
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if self.dialog_window and self.dialog_window.check_play_button(menu_mouse_pos):
                         return f"level{self.selected_level}"
