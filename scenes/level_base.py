@@ -183,8 +183,10 @@ class LevelBaseScene:
             clock.tick(60)
 
     def render_health(self):
-        heart_image = pygame.image.load('data/images/heart.jpg')
-        heart_size = (screen.get_size()[0] // 20, screen.get_size()[0] // 20)
+        heart_image = pygame.image.load('data/images/heart.png')
+        heart_image.set_colorkey((255,255,255))  # Set white color as transparent
+        heart_image = heart_image.convert_alpha()
+        heart_size = (screen.get_size()[0] // 19, screen.get_size()[0] // 20)
         scaled_heart = pygame.transform.scale(heart_image, heart_size)
         for i in range(self.player.health):
             screen.blit(scaled_heart, (screen.get_size()[0] - heart_size[0] * (i + 1), 10))
