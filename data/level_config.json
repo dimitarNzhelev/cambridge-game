@@ -15,9 +15,9 @@
             "falling_object_intensity": 1.2,
             "enemy_position": [280, 144],
             "background_object": {
-                "image": "data/images/background_object2.png",
-                "position": [150, 150],
-                "parallax_factor": 0.6
+                "image": "data/images/castle.webp",
+                "position": [0, 0],
+                "parallax_factor": 0.001
             }
         },
         "3": {
@@ -25,9 +25,9 @@
             "falling_object_intensity": 1.4,
             "enemy_position": [94, 97],
             "background_object": {
-                "image": "data/images/background_object3.png",
-                "position": [200, 200],
-                "parallax_factor": 0.7
+                "image": "data/images/castle.webp",
+                "position": [0, 0],
+                "parallax_factor": 0.001
             }
         },
         "4": {
@@ -35,9 +35,19 @@
             "falling_object_intensity": 1.4,
             "enemy_position": [166, 97],
             "background_object": {
-                "image": "data/images/background_object4.png",
-                "position": [250, 250],
-                "parallax_factor": 0.8
+                "image": "data/images/castle.webp",
+                "position": [0, 0],
+                "parallax_factor": 0.001
+            }
+        },
+        "5": {
+            "player_start": [166, 648],
+            "falling_object_intensity": 1.4,
+            "enemy_position": [200, 112],
+            "background_object": {
+                "image": "data/images/castle.webp",
+                "position": [0, 0],
+                "parallax_factor": 0.001
             }
         }
     }
