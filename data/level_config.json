@@ -49,6 +49,16 @@
                 "position": [0, 0],
                 "parallax_factor": 0.001
             }
+        },
+        "6": {
+            "player_start": [166, 648],
+            "falling_object_intensity": 2.0,
+            "enemy_position": [200, 112],
+            "background_object": {
+                "image": "data/images/castle.webp",
+                "position": [0, 0],
+                "parallax_factor": 0.001
+            }
         }
     }
 }
