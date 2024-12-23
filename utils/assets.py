@@ -32,9 +32,9 @@ def load_assets():
     load_animations()
     
     # Load music
-    # pygame.mixer.music.load('data/audio/music.mp3')
-    # pygame.mixer.music.set_volume(0.1)
-    # pygame.mixer.music.play(-1)
+    pygame.mixer.music.load('data/audio/music.mp3')
+    pygame.mixer.music.set_volume(0.1)
+    pygame.mixer.music.play(-1)
     
     return assets
 
