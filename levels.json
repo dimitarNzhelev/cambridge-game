@@ -1,24 +1,24 @@
 [
     {
-        "name": "Alah ahkbar",
+        "name": "Математически анализ",
         "description": "This is the first level.",
         "position": [20, 12],
         "size": [170, 180]
     },
     {
-        "name": "Level 2",
+        "name": "Геометричен и механичен смисъл  на понятието производна",
         "description": "This is the second level.",
         "position": [310, 20],
         "size": [170, 180]
     },
     {
-        "name": "Level 3",
+        "name": "Комбинаторика",
         "description": "This is the third level.",
         "position": [610, 20],
         "size": [170, 180]
     },
     {
-        "name": "Level 4",
+        "name": "Пълна вероятност. Формула на Бейс",
         "description": "This is the fourth level.",
         "position": [150, 210],
         "size": [170, 180]

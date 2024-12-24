@@ -84,12 +84,11 @@ class LevelSelectionScene:
                             self.selected_level = self.levels.index(level) + 1
                             highest_score = self.scores.get(self.levels.index(level) + 1, 0)
                             self.dialog_window = DialogWindow(
-                                font_path=self.font_path,
-                                text=f"Name: {level['name']}\nDescription: {level['description']}\nHighest Score: {highest_score}",
-                                position=(screen.get_size()[0]//4, screen.get_size()[1]//4),
+                                font_path=None,
+                                text=f"{level['name']}\n\n{level['description']}\n\nHighest Score: {highest_score}",
                                 width=screen.get_size()[0]//2,
                                 height=screen.get_size()[1]//2,
-                                font_size=screen.get_size()[1]//30,
+                                font_size=screen.get_size()[1]//20,
                                 show_play_button=True  # Enable play button
                             )
                         i += 1

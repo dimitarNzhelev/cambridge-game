@@ -46,7 +46,7 @@ class LevelBaseScene:
         self.font = pygame.font.Font(None, 36)  # Default font and size
         self.enemy = Enemy(*self.enemy_position)  # Initialize the enemy with the new size
         self.conversation_active = False
-        self.dialog_window = DialogWindow("", "", (50, 50), screen.get_size()[0] - screen.get_size()[0]//10, screen.get_size()[1] - screen.get_size()[1]//10, screen.get_size()[1]//20)
+        self.dialog_window = DialogWindow("", "", screen.get_size()[0] - screen.get_size()[0]//10, screen.get_size()[1] - screen.get_size()[1]//10, screen.get_size()[1]//20)
         self.load_dialog_from_file(f'data/enemies/level{self.level_number}.npc')
         self.math_problems = get_random_problems(load_math_problems(self.level_number), 2)
         self.current_problems = []
@@ -201,12 +201,6 @@ class LevelBaseScene:
         pygame.display.update()
         pygame.time.delay(2000)
         return "level_selection"
-
-    def show_math_problem(self):
-        if self.current_problem_index < len(self.current_problems):
-            problem_text = self.current_problems[self.current_problem_index]
-            problem_surface = self.font.render(problem_text, True, (0, 0, 0))
-            screen.blit(problem_surface, (screen.get_size()[0] // 2 - problem_surface.get_width() // 2, screen.get_size()[1] // 2 - problem_surface.get_height() // 2))
 
     def check_answer(self):
         # Implement logic to check the player's answer
