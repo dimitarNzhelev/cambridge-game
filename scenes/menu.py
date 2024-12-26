@@ -8,7 +8,7 @@ from utils.components.resource_loader import ResourceLoader
 class MenuScene:
     def __init__(self):
         self.loader = ResourceLoader.get_instance()
-        self.background = self.loader.get_image("data/images/home/Background.png")
+        self.background = self.loader.get_image("data/images/background.png")
         self.background = pygame.transform.scale(self.background, screen.get_size())
         
         # Cache font
@@ -34,10 +34,10 @@ class MenuScene:
 
             # Create title text
             title1_surf, title1_rect = self.create_text(
-                "Cambridge", screen.get_size()[1]//10, "#b68f40", (screen.get_size()[0]//2, screen.get_size()[1]//2 - screen.get_size()[1]//10)
+                "Cambridge", screen.get_size()[1]//10, "#0077b6", (screen.get_size()[0]//2, screen.get_size()[1]//2 - screen.get_size()[1]//10)
             )
             title2_surf, title2_rect = self.create_text(
-                "Gamble", screen.get_size()[1]//10, "#b68f40", (screen.get_size()[0]//2, screen.get_size()[1]//2)
+                "Gamble", screen.get_size()[1]//10, "#0077b6", (screen.get_size()[0]//2, screen.get_size()[1]//2)
             )
 
             # Create buttons
@@ -51,7 +51,7 @@ class MenuScene:
                 pos=(screen.get_size()[0]//2, screen.get_size()[1]//2 + screen.get_size()[1]//10),
                 text_input="PLAY",
                 font=self.get_font(screen.get_size()[1]//20),
-                base_color="#d7fcd4",
+                base_color="#0077b6",
                 hovering_color="White"
             )
             
@@ -60,7 +60,7 @@ class MenuScene:
                 pos=(screen.get_size()[0]//2, screen.get_size()[1]//2 + 2 * screen.get_size()[1]//10),
                 text_input="CREDITS",
                 font=self.get_font(screen.get_size()[1]//20),
-                base_color="#d7fcd4",
+                base_color="#0077b6",
                 hovering_color="White"
             )
             
@@ -69,7 +69,7 @@ class MenuScene:
                 pos=(screen.get_size()[0]//2, screen.get_size()[1]//2 + 3 * screen.get_size()[1]//10),
                 text_input="QUIT",
                 font=self.get_font(screen.get_size()[1]//20),
-                base_color="#d7fcd4",
+                base_color="#0077b6",
                 hovering_color="White"
             )
 

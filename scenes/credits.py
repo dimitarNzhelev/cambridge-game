@@ -6,7 +6,7 @@ from utils.components.resource_loader import ResourceLoader  # Remove display im
 class CreditsScene:
     def __init__(self):
         self.loader = ResourceLoader.get_instance()
-        self.background = self.loader.get_image("data/images/home/Background.png")
+        self.background = self.loader.get_image("data/images/background.png")
         self.background = pygame.transform.scale(self.background, screen.get_size())
         self.font_path = "data/images/home/font.ttf"
         self.font = pygame.font.Font(self.font_path, screen.get_size()[1] // 24)
@@ -52,7 +52,7 @@ class CreditsScene:
             x_offsets = [screen.get_size()[0] // 6, 3 * screen.get_size()[0] // 6, 5 * screen.get_size()[0] // 6]
 
             # Draw title
-            title_surface = self.title_font.render("CREDITS", True, "#b68f40")
+            title_surface = self.title_font.render("CREDITS", True, "#0077b6")
             screen.blit(title_surface, (screen.get_size()[0] // 2 - title_surface.get_width() // 2, screen.get_size()[1] // 10))
 
             for i, entry in enumerate(self.credits):

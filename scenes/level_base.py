@@ -37,9 +37,7 @@ class LevelBaseScene:
             ]
         ]
         self.background_image = pygame.image.load(self.background_object_config['image'])
-        self.background_image.set_colorkey((255, 255, 255))
-        self.background_image = self.background_image.convert_alpha()
-        self.background_image = pygame.transform.scale(self.background_image, (display.get_size()[0] - display.get_size()[0] // 10, display.get_size()[1]))
+        self.background_image = pygame.transform.scale(self.background_image, (display.get_size()[0], display.get_size()[1]))
         
         self.tile_map = load_tile_map(f'data/map{self.level_number}.txt')
         self.falling_object_manager = FallingObjectManager(self.assets['plant_img'], self.player, screen.get_size()[1], self.falling_object_intensity)

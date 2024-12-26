@@ -41,10 +41,10 @@ class LevelSelectionScene:
             menu_mouse_pos = pygame.mouse.get_pos()
 
             title1_surf, title1_rect = self.create_text(
-                "Select", screen.get_size()[1]//10, "#b68f40", (screen.get_size()[0]//2, screen.get_size()[1]//2 - screen.get_size()[1]//10)
+                "Select", screen.get_size()[1]//10, "#ced4da", (screen.get_size()[0]//2, screen.get_size()[1]//2 - screen.get_size()[1]//10)
             )
             title2_surf, title2_rect = self.create_text(
-                "Level", screen.get_size()[1]//10, "#b68f40", (screen.get_size()[0]//2, screen.get_size()[1]//2)
+                "Level", screen.get_size()[1]//10, "#ced4da", (screen.get_size()[0]//2, screen.get_size()[1]//2)
             )
 
             screen.blit(title1_surf, title1_rect)
