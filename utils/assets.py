@@ -6,8 +6,8 @@ def load_assets():
     assets = {}
     
     # Load images
-    assets['grass_img'] = pygame.image.load('data/images/grass.png')
-    assets['dirt_img'] = pygame.image.load('data/images/dirt.png')
+    assets['grass_img'] = pygame.image.load('data/images/ciment.png')
+    assets['dirt_img'] = pygame.image.load('data/images/ciment_dolu.png')
     assets['plant_img'] = pygame.image.load('data/images/plant.png').convert()
     assets['plant_img'].set_colorkey((255, 255, 255))
     assets['background_image'] = pygame.image.load('data/images/castle.webp').convert()
