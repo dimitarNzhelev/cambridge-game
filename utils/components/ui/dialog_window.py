@@ -45,7 +45,7 @@ class DialogWindow:
         else:
             # Render text
             lines = self.text.split('\n')
-            y_offset = self.position[1] + self.padding
+            y_offset = self.position[1] + self.height // 6  # Slightly above the center
 
             for line in lines:
                 words = line.split(' ')

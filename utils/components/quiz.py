@@ -37,7 +37,7 @@ class Quiz:
 
     def show_question(self):
         if self.is_finished_no_score():
-            self.dialog_window.set_text(f"Quiz finished! Your score: {self.get_score()}")
+            self.dialog_window.set_text(f"Домашното е предадено!\n Твоят резултат: {self.get_score()} / 5")
             self.dialog_window.render(self.screen)
             self.showed_score = True
             pygame.display.update()

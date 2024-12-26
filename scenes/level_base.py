@@ -226,7 +226,7 @@ class LevelBaseScene:
             current_line = self.dialog_window.dialog_lines[self.dialog_window.current_line_index]
             if current_line.startswith('-'):
                 # Player's line
-                self.dialog_window.set_text("Player: \n" + current_line[1:].strip())            
+                self.dialog_window.set_text("Виктор: \n" + current_line[1:].strip())            
             else:
                 # Enemy's line
                 self.dialog_window.set_text(current_line)

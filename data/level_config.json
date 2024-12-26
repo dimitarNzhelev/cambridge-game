@@ -33,7 +33,7 @@
         "4": {
             "player_start": [166, 648],
             "falling_object_intensity": 1.6,
-            "enemy_position": [166, 97],
+            "enemy_position": [140, 97],
             "background_object": {
                 "image": "data/images/background.png",
                 "position": [0, 0],
