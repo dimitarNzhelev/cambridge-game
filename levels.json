@@ -1,49 +1,49 @@
 [
     {
-        "name": "Математически анализ",
-        "description": "This is the first level.",
+        "description": "Математически анализ",
+        "name": "Ниво 1",
         "position": [20, 12],
         "size": [170, 180]
     },
     {
-        "name": "Геометричен и механичен смисъл  на понятието производна",
-        "description": "This is the second level.",
+        "description": "Геометричен и механичен смисъл  на понятието производна",
+        "name": "Ниво 2",
         "position": [310, 20],
         "size": [170, 180]
     },
     {
-        "name": "Комбинаторика",
-        "description": "This is the third level.",
+        "description": "Комбинаторика",
+        "name": "Ниво 3",
         "position": [610, 20],
         "size": [170, 180]
     },
     {
-        "name": "Пълна вероятност. Формула на Бейс",
-        "description": "This is the fourth level.",
+        "description": "Пълна вероятност. Формула на Бейс",
+        "name": "Ниво 4",
         "position": [150, 210],
         "size": [170, 180]
     },
     {
-        "name": "Level 5",
-        "description": "This is the fifth level.",
+        "description": "Пълна вероятност. Биномно разпределение",
+        "name": "Ниво 5",
         "position": [460, 210],
         "size": [170, 185]
     },
     {
-        "name": "Level 6",
-        "description": "This is the sixth level.",
+        "description": "Статистически изводи с модел нормално разпределение",
+        "name": "Ниво 6",
         "position": [20, 410],
         "size": [175, 180]
     },
     {
-        "name": "Level 7",
-        "description": "This is the seventh level.",
+        "description": "Линеен регресионен модел",
+        "name": "Ниво 7",
         "position": [295, 410],
         "size": [175, 185]
     },
     {
-        "name": "Level 8",
-        "description": "This is the eighth level.",
+        "description": "Обобщение",
+        "name": "Ниво 8",
         "position": [610, 410],
         "size": [170, 175]
     }

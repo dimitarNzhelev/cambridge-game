@@ -56,7 +56,7 @@ class Quiz:
     def show_answer_choices(self):
         y_offset = screen.get_size()[1] // 2 + screen.get_size()[1] // 10  # Position a little below the half of the screen
         mouse_pos = pygame.mouse.get_pos()
-        spacing = screen.get_size()[0] // 8  # Increase the spacing between answers
+        spacing = screen.get_size()[0] // 10  # Increase the spacing between answers
         rect_padding = screen.get_size()[0] // 80  # Add padding to make the rect bigger
         current_question = self.get_current_question()
 
